@@ -49,7 +49,7 @@ int main() {
 //user-made functions
 int input() {
 	for (;;) {
-		cout << "足したい数値を入力してください" << endl;
+		cout << "Input data:";
 		cin >> sInput; //Input
 
 		//Validation
@@ -90,12 +90,30 @@ void add() {
 	int iCountUp = 0;
 	int iDifference = 0;
 	int iBuffer = 0;
-	if (sInput.length() > sAnswer.length()) { //現在までの合計より、今入力した値のほうが大きい時
+	if (sInput.length() >= sAnswer.length()) { //現在までの合計より、今入力した値のほうが大きい時
 		iDifference = sInput.length() - sAnswer.length();
 		for (int i = sAnswer.length()-1; i >= 0;i--) {
 			iBuffer = int(sAnswer[i])-CHARNUM + int(sInput[i + iDifference])-CHARNUM + iCountUp;
-			cout << int(sAnswer[1]) << endl;
-			cout << int(sInput[1 + iDifference]) << endl;
+			iCountUp = 0;
+			if (iBuffer >= 10) {
+				iCountUp = 1;
+				iBuffer = iBuffer - 10;
+			}
+			sNewAnswer = to_string(iBuffer) + sNewAnswer; //頭に答えをくっつける（1桁ずつ）
+		}
+		if (sInput.length() > sAnswer.length()) {
+			sNewAnswer = to_string(stoi(sInput.substr(0, iDifference)) + iCountUp) + sNewAnswer; //余剰分処理
+		}
+		sAnswer = sNewAnswer;
+		iCount++;
+		return;
+		//TODO sNewAnswer必要ないかも
+	}
+
+	if(sInput.length() < sAnswer.length()) {
+		iDifference = sAnswer.length() - sInput.length();
+		for (int i = sInput.length() - 1; i >= 0;i--) {
+			iBuffer = int(sInput[i]) - CHARNUM + int(sAnswer[i + iDifference]) - CHARNUM + iCountUp;
 			iCountUp = 0;
 			if (iBuffer >= 10) {
 				iCountUp = 1;
@@ -103,10 +121,7 @@ void add() {
 			}
 			sNewAnswer = to_string(iBuffer) + sNewAnswer;
 		}
-		sNewAnswer = to_string(stoi(sInput.substr(0, iDifference)) + iCountUp) + sNewAnswer;
-		sAnswer = sNewAnswer;
-		iCount++;
-		//TODO sNewAnswer必要ないかも
+		sNewAnswer = to_string(stoi(sAnswer.substr(0, iDifference)) + iCountUp) + sNewAnswer;
 	}
 }
 
