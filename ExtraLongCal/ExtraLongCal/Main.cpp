@@ -14,9 +14,10 @@ void display();
 void add();
 string padding(int length, string sContent);
 bool IsInteger(const string& str);
+void linedraw(char, int);
 
 //-----Declare Global Constants-----
-#define MAXDIGIT 30 //最大可能桁数
+#define MAXDIGIT 70 //最大可能桁数
 #define CHARNUM 48 // 文字コード変換用
 
 //-----Declare Global Variables-----
@@ -31,9 +32,6 @@ void initialize() {
 	system("cls"); //Console Clear
 	cout << "Extra Long Calculator" << endl;
 	cout << "<<COPYRIGHT HERE>>" << endl;
-
-
-
 }
 
 int main() {
@@ -76,11 +74,8 @@ int input() {
 }
 
 void displayprep () {
-	if (sInput.length() > iMaxd) {
-		iMaxd = sInput.length();
-	} 
 	for (int i = 0; i < elements.size(); ++i) {
-		padding(iMaxd, elements[i]);
+		elements[i] = padding(MAXDIGIT+1, elements[i]);
 	}
 }
 
@@ -127,10 +122,17 @@ void add() {
 
 void display() {
 	system("cls");
-	for (int i = 0; i < elements.size(); ++i) {
+	for (int i = 0; i < elements.size()-1; ++i) {
 		cout << elements[i] << endl;
 	}
-	cout << sAnswer << endl;
+	string buffer;
+	buffer = elements[elements.size() - 1];//最後をバッファに移動
+	buffer.erase(buffer.begin());//最初の文字を消去
+	buffer = "+" + buffer;
+	cout << buffer << endl;
+	linedraw('-', MAXDIGIT + 1);
+
+	cout << padding(MAXDIGIT+1,sAnswer) << endl;
 }
 
 /*!
@@ -142,7 +144,6 @@ inline bool IsInteger(const string& str) {
 	if (str.find_first_not_of("0123456789 \t") != string::npos) {
 		return false;
 	}
-
 	return true;
 }
 
@@ -153,13 +154,19 @@ inline bool IsInteger(const string& str) {
 * @return str 文字列
 */
 string padding(int length, string sContent) {
-
 	stringstream output;
 	for (int i = 0; i < length - sContent.length(); i++) {
 		output << " ";
 	}
-
 	output << sContent;
-
 	return output.str();
+}
+
+void linedraw(char c, int length) /* 仮引数ｃに渡された文字をlength回出力 */
+{
+	int i;
+	for (i = 0; i<length; i++)
+		cout << c;
+	cout << '\n';
+	return;
 }
