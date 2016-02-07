@@ -10,13 +10,14 @@ using namespace std;
 void initialize();
 int input();
 void displayprep();
-void show();
+void display();
 void add();
 string padding(int length, string sContent);
 bool IsInteger(const string& str);
 
 //-----Declare Global Constants-----
 #define MAXDIGIT 30 //最大可能桁数
+#define CHARNUM 48 // 文字コード変換用
 
 //-----Declare Global Variables-----
 string sInput = "";
@@ -38,7 +39,10 @@ void initialize() {
 int main() {
 	initialize();
 	input();
-
+	add();
+	input();
+	add();
+	display();
 	return 0;
 }
 
@@ -81,14 +85,17 @@ void displayprep () {
 }
 
 void add() {
+	if (iCount == 0) { iCount++; sAnswer = sInput; return; }
 	string sNewAnswer = "";
 	int iCountUp = 0;
 	int iDifference = 0;
 	int iBuffer = 0;
-	if (sInput.length() > sAnswer.length()) {
+	if (sInput.length() > sAnswer.length()) { //現在までの合計より、今入力した値のほうが大きい時
 		iDifference = sInput.length() - sAnswer.length();
-		for (int i = sAnswer.length()-1; i >= 0;i++) {
-			iBuffer = sAnswer[i] + sInput[i + iDifference] + iCountUp;
+		for (int i = sAnswer.length()-1; i >= 0;i--) {
+			iBuffer = int(sAnswer[i])-CHARNUM + int(sInput[i + iDifference])-CHARNUM + iCountUp;
+			cout << int(sAnswer[1]) << endl;
+			cout << int(sInput[1 + iDifference]) << endl;
 			iCountUp = 0;
 			if (iBuffer >= 10) {
 				iCountUp = 1;
@@ -98,7 +105,17 @@ void add() {
 		}
 		sNewAnswer = to_string(stoi(sInput.substr(0, iDifference)) + iCountUp) + sNewAnswer;
 		sAnswer = sNewAnswer;
+		iCount++;
+		//TODO sNewAnswer必要ないかも
 	}
+}
+
+void display() {
+	system("cls");
+	for (int i = 0; i < elements.size(); ++i) {
+		cout << elements[i] << endl;
+	}
+	cout << sAnswer << endl;
 }
 
 /*!
