@@ -37,8 +37,6 @@ void initialize() {
 int main() {
 	initialize();
 	input();
-	cout << sInput << endl;
-	input();
 
 	return 0;
 }
@@ -50,8 +48,13 @@ int input() {
 		cin >> sInput; //Input
 
 		//Validation
+		////Empty Validation
+		if (sInput == "") {
+			cout << "何か数値を入力してください" << endl;
+			continue;
+		}
 		////# of Digits check
-		if (sInput.size() > 70) {
+		if (sInput.size() > MAXDIGIT) {
 			cout << "桁数が大きすぎます（最大桁数:" << MAXDIGIT << ")" << endl;
 			continue;
 		}
@@ -62,8 +65,9 @@ int input() {
 		}
 		elements.push_back(sInput);
 		displayprep();
-
+		break;
 	}
+	return 0;
 }
 
 void displayprep () {
@@ -75,6 +79,9 @@ void displayprep () {
 	}
 }
 
+void add() {
+	
+}
 
 /*!
 * 文字列が整数値を表しているかを調べる
