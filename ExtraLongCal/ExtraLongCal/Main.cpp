@@ -23,7 +23,8 @@ string sInput = "";
 string sOutput = "";
 string sAnswer = "";
 vector<string> elements;
-int maxd = 0; //Œ»Ý‚Ü‚Å‚ÌÅ‘½Œ…”
+int iMaxd = 0; //Œ»Ý‚Ü‚Å‚ÌÅ‘½Œ…”
+int iCount = 0; //Œû”
 
 void initialize() {
 	system("cls"); //Console Clear
@@ -71,16 +72,33 @@ int input() {
 }
 
 void displayprep () {
-	if (sInput.length() > maxd) {
-		maxd = sInput.length();
+	if (sInput.length() > iMaxd) {
+		iMaxd = sInput.length();
 	} 
 	for (int i = 0; i < elements.size(); ++i) {
-		padding(maxd, elements[i]);
+		padding(iMaxd, elements[i]);
 	}
 }
 
 void add() {
-	
+	string sNewAnswer = "";
+	int iCountUp = 0;
+	int iDifference = 0;
+	int iBuffer = 0;
+	if (sInput.length() > sAnswer.length()) {
+		iDifference = sInput.length() - sAnswer.length();
+		for (int i = sAnswer.length()-1; i >= 0;i++) {
+			iBuffer = sAnswer[i] + sInput[i + iDifference] + iCountUp;
+			iCountUp = 0;
+			if (iBuffer >= 10) {
+				iCountUp = 1;
+				iBuffer = iBuffer - 10;
+			}
+			sNewAnswer = to_string(iBuffer) + sNewAnswer;
+		}
+		sNewAnswer = to_string(stoi(sInput.substr(0, iDifference)) + iCountUp) + sNewAnswer;
+		sAnswer = sNewAnswer;
+	}
 }
 
 /*!
