@@ -1,22 +1,29 @@
 #include <iostream>
 #include <string>
 #include <stdlib.h>
+#include <vector> //動的配列
 #include <sstream>
 
 using namespace std;
 
-//Prototype Declaration
+//-----Declare Prototype-----
 void initialize();
 int input();
-void showprep();
+void displayprep();
 void show();
 void add();
 string padding();
 bool IsInteger(const string& str);
 
+//-----Declare Global Constants-----
+#define MAXDIGIT 30 //最大可能桁数
+
 //-----Declare Global Variables-----
 string sInput = "";
 string sOutput = "";
+string sAnswer = "";
+vector<string> elements;
+int maxdnow = ""; //現在までの最多桁数
 
 void initialize() {
 	system("cls"); //Console Clear
@@ -29,7 +36,8 @@ void initialize() {
 
 int main() {
 	initialize();
-	cout << "" << endl;
+	input();
+	cout << sInput << endl;
 	input();
 
 	return 0;
@@ -37,15 +45,29 @@ int main() {
 
 //user-made functions
 int input() {
-	cout << "足したい数値を入力してください" << endl;
-	cin >> sInput; //Input
+	for (;;) {
+		cout << "足したい数値を入力してください" << endl;
+		cin >> sInput; //Input
 
-				   ////Validation
-				   //Int Check 整数確認
-	if (IsInteger(sInput) == true) {}
-	//Digit Check 桁数確認
+		//Validation
+		////# of Digits check
+		if (sInput.size() > 70) {
+			cout << "桁数が大きすぎます（最大桁数:" << MAXDIGIT << ")" << endl;
+			continue;
+		}
+		////All digits int check
+		if (IsInteger(sInput) == false) {
+			cout << "整数のみを入力してください" << endl;
+			continue;
+		}
+		elements.push_back(sInput);
+		displayprep();
 
+	}
+}
 
+void displayprep () {
+	
 }
 
 
