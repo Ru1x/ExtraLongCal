@@ -12,7 +12,7 @@ int input();
 void displayprep();
 void show();
 void add();
-string padding();
+string padding(int length, string sContent);
 bool IsInteger(const string& str);
 
 //-----Declare Global Constants-----
@@ -23,7 +23,7 @@ string sInput = "";
 string sOutput = "";
 string sAnswer = "";
 vector<string> elements;
-int maxdnow = ""; //Œ»Ý‚Ü‚Å‚ÌÅ‘½Œ…”
+int maxd = 0; //Œ»Ý‚Ü‚Å‚ÌÅ‘½Œ…”
 
 void initialize() {
 	system("cls"); //Console Clear
@@ -67,7 +67,12 @@ int input() {
 }
 
 void displayprep () {
-	
+	if (sInput.length() > maxd) {
+		maxd = sInput.length();
+	} 
+	for (int i = 0; i < elements.size(); ++i) {
+		padding(maxd, elements[i]);
+	}
 }
 
 
@@ -82,4 +87,22 @@ inline bool IsInteger(const string& str) {
 	}
 
 	return true;
+}
+
+/*!
+* •¶Žš”‚ð‡’v‚Å‚«‚é‚æ‚¤‚Éæ“ª‚É”¼ŠpƒXƒy[ƒX‚ð’Ç‰Á‚·‚é
+* @param[inout] str •¶Žš—ñ sContent
+*               int •¶Žš” length
+* @return str •¶Žš—ñ
+*/
+string padding(int length, string sContent) {
+
+	stringstream output;
+	for (int i = 0; i < length - sContent.length(); i++) {
+		output << " ";
+	}
+
+	output << sContent;
+
+	return output.str();
 }
