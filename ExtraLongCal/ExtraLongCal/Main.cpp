@@ -31,16 +31,18 @@ int iCount = 0; //Œû”
 void initialize() {
 	system("cls"); //Console Clear
 	cout << "Extra Long Calculator" << endl;
-	cout << "<<COPYRIGHT HERE>>" << endl;
+	cout << "Developed by Yuki Dempo (41514216)" << endl;
 }
 
 int main() {
 	initialize();
 	input();
 	add();
-	input();
-	add();
-	display();
+	for (;;) {
+		input();
+		add();
+		display();
+	}
 	return 0;
 }
 
@@ -66,6 +68,8 @@ int input() {
 			cout << "®”‚Ì‚İ‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢" << endl;
 			continue;
 		}
+		////Check if exit
+		if (stoi(sInput) == 0) exit(0);
 		elements.push_back(sInput);
 		displayprep();
 		break;
@@ -102,7 +106,6 @@ void add() {
 		sAnswer = sNewAnswer;
 		iCount++;
 		return;
-		//TODO sNewAnswer•K—v‚È‚¢‚©‚à
 	}
 
 	if(sInput.length() < sAnswer.length()) {
@@ -117,6 +120,17 @@ void add() {
 			sNewAnswer = to_string(iBuffer) + sNewAnswer;
 		}
 		sNewAnswer = to_string(stoi(sAnswer.substr(0, iDifference)) + iCountUp) + sNewAnswer;
+	}
+}
+
+void substract() {
+	if (iCount == 0) { iCount++; sAnswer = sInput; return; }
+	string sNewAnswer = "";
+	int iCountDown = 0;
+	bool bNegative = false;
+	if (sInput.length() >= sAnswer.length()) {
+		bNegative = true;
+
 	}
 }
 
